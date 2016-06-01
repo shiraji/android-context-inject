@@ -7,6 +7,8 @@ import com.github.shiraji.android_context_inject.MainFragment;
 import com.github.shiraji.android_context_inject.MainFragment_MembersInjector;
 import com.github.shiraji.android_context_inject.SomeModel;
 import com.github.shiraji.android_context_inject.SomeModel_Factory;
+import com.github.shiraji.android_context_inject.SubActivity;
+import com.github.shiraji.android_context_inject.SubActivity_MembersInjector;
 import dagger.MembersInjector;
 import dagger.internal.MembersInjectors;
 import javax.annotation.Generated;
@@ -61,6 +63,7 @@ public final class DaggerAppComponent implements AppComponent {
     private Provider<Context> provideContextProvider;
     private Provider<SomeModel> someModelProvider;
     private MembersInjector<MainActivity> mainActivityMembersInjector;
+    private MembersInjector<SubActivity> subActivityMembersInjector;
   
     private ActivityComponentImpl(ActivityModule activityModule) {  
       if (activityModule == null) {
@@ -74,11 +77,17 @@ public final class DaggerAppComponent implements AppComponent {
       this.provideContextProvider = ActivityModule_ProvideContextFactory.create(activityModule);
       this.someModelProvider = SomeModel_Factory.create(DaggerAppComponent.this.provideContextProvider, provideContextProvider);
       this.mainActivityMembersInjector = MainActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), DaggerAppComponent.this.provideContextProvider, provideContextProvider, someModelProvider);
+      this.subActivityMembersInjector = SubActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), DaggerAppComponent.this.provideContextProvider, provideContextProvider, someModelProvider);
     }
   
     @Override
     public void inject(MainActivity activity) {  
       mainActivityMembersInjector.injectMembers(activity);
+    }
+  
+    @Override
+    public void inject(SubActivity activity) {  
+      subActivityMembersInjector.injectMembers(activity);
     }
   
     @Override
@@ -91,6 +100,7 @@ public final class DaggerAppComponent implements AppComponent {
       private Provider<Context> provideContextProvider;
       private MembersInjector<MainFragment> mainFragmentMembersInjector;
       private MembersInjector<MainActivity> mainActivityMembersInjector;
+      private MembersInjector<SubActivity> subActivityMembersInjector;
     
       private FragmentComponentImpl(FragmentModule fragmentModule) {  
         if (fragmentModule == null) {
@@ -104,6 +114,7 @@ public final class DaggerAppComponent implements AppComponent {
         this.provideContextProvider = FragmentModule_ProvideContextFactory.create(fragmentModule);
         this.mainFragmentMembersInjector = MainFragment_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), DaggerAppComponent.this.provideContextProvider, ActivityComponentImpl.this.provideContextProvider, provideContextProvider);
         this.mainActivityMembersInjector = MainActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), DaggerAppComponent.this.provideContextProvider, ActivityComponentImpl.this.provideContextProvider, ActivityComponentImpl.this.someModelProvider);
+        this.subActivityMembersInjector = SubActivity_MembersInjector.create((MembersInjector) MembersInjectors.noOp(), DaggerAppComponent.this.provideContextProvider, ActivityComponentImpl.this.provideContextProvider, ActivityComponentImpl.this.someModelProvider);
       }
     
       @Override

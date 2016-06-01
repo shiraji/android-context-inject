@@ -88,6 +88,36 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity", "activityContext: " + activityContext);
         Log.d("MainActivity", "applicationContext: " + applicationContext);
+        Log.d("MainActivity", "-----------------------------------------");
+
+        Intent intent = new Intent(this, SubActivity.class);
+        startActivity(intent);
+    }
+}
+```
+
+```java
+public class SubActivity extends AppCompatActivity {
+
+    @Named("applicationContext")
+    @Inject
+    Context applicationContext;
+
+    @Named("activityContext")
+    @Inject
+    Context activityContext;
+
+    @Inject
+    SomeModel someModel;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        MyApplication.getComponent(this).inject(this);
+
+        Log.d("SubActivity", "activityContext: " + activityContext);
+        Log.d("SubActivity", "applicationContext: " + applicationContext);
     }
 }
 ```
@@ -95,13 +125,21 @@ public class MainActivity extends AppCompatActivity {
 ### ログ出力
 
 ```
-D/MainFragment: applicationContext: com.github.shiraji.android_context_inject.MyApplication@515530f
-D/MainFragment: activityContext: com.github.shiraji.android_context_inject.MainActivity@5fd1f9c
-D/MainFragment: fragmentContext: com.github.shiraji.android_context_inject.MainActivity@5fd1f9c
-D/SomeModel: applicationContext: com.github.shiraji.android_context_inject.MyApplication@515530f
-D/SomeModel: activityContext: com.github.shiraji.android_context_inject.MainActivity@5fd1f9c
-D/MainActivity: activityContext: com.github.shiraji.android_context_inject.MainActivity@5fd1f9c
-D/MainActivity: applicationContext: com.github.shiraji.android_context_inject.MyApplication@515530f
+D/MainFragment: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
+D/MainFragment: activityContext: com.github.shiraji.android_context_inject.MainActivity@8b01ad3
+D/MainFragment: fragmentContext: com.github.shiraji.android_context_inject.MainActivity@8b01ad3
+D/SomeModel: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
+D/SomeModel: activityContext: com.github.shiraji.android_context_inject.MainActivity@8b01ad3
+D/MainActivity: activityContext: com.github.shiraji.android_context_inject.MainActivity@8b01ad3
+D/MainActivity: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
+D/MainActivity: -----------------------------------------
+D/MainFragment: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
+D/MainFragment: activityContext: com.github.shiraji.android_context_inject.SubActivity@c055ec3
+D/MainFragment: fragmentContext: com.github.shiraji.android_context_inject.SubActivity@c055ec3
+D/SomeModel: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
+D/SomeModel: activityContext: com.github.shiraji.android_context_inject.SubActivity@c055ec3
+D/SubActivity: activityContext: com.github.shiraji.android_context_inject.SubActivity@c055ec3
+D/SubActivity: applicationContext: com.github.shiraji.android_context_inject.MyApplication@f0cecc2
 ```
 
 ### 懸念事項
