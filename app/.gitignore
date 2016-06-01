@@ -1,0 +1,7 @@
+/build/*
+!/build/generated
+/build/generated/*
+!/build/generated/source
+/build/generated/source/*
+!/build/generated/source/apt
+
